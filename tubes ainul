@@ -1,0 +1,57 @@
+import cv2
+import numpy as np
+import matplotlib.image as mpimg
+from scipy import signal
+from matplotlib import pyplot as plt
+
+#konvolusi : reduksi noise menggunakan filter gausian
+imgc = cv2.imread('kucing.jpg')
+img = cv2.cvtColor(imgc, cv2.COLOR_BGR2GRAY) 
+
+w_k = np.array([[0, -1, 0],
+[-1,5, -1],
+[0, -1, 0],],
+dtype='float')
+ 
+w_k = np.rot90(w_k, 2)
+ 
+print (img.shape, w_k.shape)
+f = signal.convolve2d(img, w_k, 'valid') 
+print(np.min(f))
+ 
+plt.subplot(121),plt.imshow(img,'gray'),plt.title('original')
+plt.xticks([]), plt.yticks([])
+plt.subplot(122),plt.imshow(f,'gray'),plt.title('gaussian Blur')
+plt.xticks([]), plt.yticks([])
+plt.show()
+
+#segmentasi citra : penerapan threshold
+img = cv2.imread('kucing.jpg',0)
+ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
+ret,thresh2 = cv2.threshold(img,127,255,cv2.THRESH_BINARY_INV)
+ret,thresh3 = cv2.threshold(img,127,255,cv2.THRESH_TRUNC)
+ret,thresh4 = cv2.threshold(img,127,255,cv2.THRESH_TOZERO)
+ret,thresh5 = cv2.threshold(img,127,255,cv2.THRESH_TOZERO_INV)
+
+titles = ['Original Image','BINARY','BINARY_INV','TRUNC','TOZERO','TOZERO_INV']
+images = [img, thresh1, thresh2, thresh3, thresh4, thresh5]
+
+for i in range(6):
+    plt.subplot(2,3,i+1),plt.imshow(images[i],'gray')
+    plt.title(titles[i])
+    plt.xticks([]),plt.yticks([])
+
+plt.show()
+
+#transformasi gray : negative image
+img=mpimg.imread('kucing.jpg')
+x=img[:,:,0]
+y=np.shape(x)
+z=np.zeros(y)
+z=255-x
+
+plt.xlabel("Value")
+plt.ylabel("pixels Frequency")
+plt.title("Negative image")
+plt.imshow(z,cmap="gray")
+plt.show()
