@@ -2,16 +2,16 @@ import cv2 as cv
 from matplotlib import pyplot as plt
 
 #gambar asli
-img = plt.imread("foto.jpg") #mengambil gambar dalam mode matplotlib
+img = plt.imread("fotouy.jpeg") #mengambil gambar dalam mode matplotlib
 
 #gambar asli di detek wajahnya
 face_cascade = cv.CascadeClassifier("haarcascade_frontalface_alt.xml") #module deteksi wajah
-hasildetekawal = plt.imread("foto.jpg") 
+hasildetekawal = plt.imread("fotouy.jpeg") 
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-faces = face_cascade.detectMultiScale(gray, 1.1, 4) #untuk menemukan wajah atau mata
+faces = face_cascade.detectMultiScale(gray, 1.1, 4) #untuk menemukan wajah
 
 for(x,y,w,h) in faces:
-    cv.rectangle(img, (x,y), (x+w, y+h), (255, 0,0), 2) #proses deteksi wajah
+    cv.rectangle(img, (x,y), (x+w, y+h), (255, 255,255), 2) #proses memberikan kotak di wajah
 
 #pengaturan brightness & kontras
 hasilimageenhanc = cv.convertScaleAbs(img, alpha=1.8, beta=30)
@@ -28,8 +28,7 @@ gray = cv.cvtColor(gambarfinal, cv.COLOR_BGR2GRAY)
 faces = face_cascade.detectMultiScale(gray, 1.1, 4)
 
 for(x,y,w,h) in faces:
-    cv.rectangle(gambarfinal, (x,y), (x+w, y+h), (255, 0,0), 2) #proses deteksi wajah
-
+    cv.rectangle(gambarfinal, (x,y), (x+w, y+h), (255, 255,255), 6) #proses memberikan kotak di wajah
 
 titles = ['Asli','deteksi tepi','deteksi wajah','Brightness&Contrast','deteksi tepi','deteksi wajah']
 images = [img, garistepi, hasildetekawal,  hasilimageenhanc, garistepifinal, gambarfinal]
