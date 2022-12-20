@@ -17,7 +17,6 @@ for(x,y,w,h) in faces:
 hasilimageenhanc = cv.convertScaleAbs(img, alpha=1.8, beta=30)
 
 #deteksi tepi
-gray = cv.cvtColor(hasilimageenhanc, cv.COLOR_BGR2GRAY)
 garistepi = cv.Canny(img,40,55,apertureSize =3) #image asli
 garistepifinal = cv.Canny(hasilimageenhanc,40,55,apertureSize =3) #image setelah birghtness & kontras
 
@@ -36,7 +35,7 @@ images = [img, garistepi, hasildetekawal,  hasilimageenhanc, garistepifinal, gam
 for i in range(6): #mengambil 6 gambar
     plt.subplot(2,3,i+1),plt.imshow(images[i], cmap="gray") #menempatkan dan memunculkan gambar di matplotlib
     plt.title(titles[i]) #memberi judul pad gambar
-    plt.xticks([]),plt.yticks([]) #menghasil koordinat sumbu x dan y
+    plt.xticks([]),plt.yticks([]) #menghapus koordinat sumbu x dan y
 
 
 plt.show()
